@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.target.cabservice.dto.Location;
 import com.target.cabservice.dto.RegistrationDTO;
 /**
  * Using In memory DB to save User Details
@@ -15,6 +16,10 @@ import com.target.cabservice.dto.RegistrationDTO;
 public class UserDaoImpl implements UserDao {
 	
 	private List<CabUser> cabserviceOptedUsers = new ArrayList<>();
+	private List<Location> dropLocation = new ArrayList<>();
+	
+	private int[][] srcToDestDistance;
+	 
 
 	
 	
@@ -61,6 +66,39 @@ public class UserDaoImpl implements UserDao {
         }
         
         return existingUser;
+	}
+
+
+
+	@Override
+	public void saveUserDropLocation(List<Location> dropLocationList) {
+		   
+		    
+		  for(Location loc : dropLocationList) {
+			  
+			  dropLocation.add(loc);
+		  }
+	}
+
+
+
+	@Override
+	public void saveDistance(List<DropLocationDistanceValueDataPair> dropLocationsList) {
+	     
+		   
+		srcToDestDistance  = new int[dropLocationsList.size()][dropLocationsList.size()];
+		
+		for(int i = 0;i<dropLocationsList.size();i++) {
+			
+			 String[] distance = dropLocationsList.get(i).getValue().split(",");
+			
+			  for(int j =0;j<dropLocationsList.size();j++) {
+				  
+				  srcToDestDistance[i][j] = Integer.parseInt((distance[j]));
+			  }
+		}
+		     
+		
 	}
 
 }
