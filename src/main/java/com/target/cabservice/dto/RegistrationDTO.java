@@ -5,6 +5,8 @@ package com.target.cabservice.dto;
  *
  */
 public class RegistrationDTO {
+	
+	  
 
 	  private int  team_member_id;
 	  

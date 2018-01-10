@@ -13,10 +13,10 @@ public class Location {
 	
 	private double distanceFromSrc;
 
-	public Location(String description,double distanceFromSrc) {
+	public Location(String description) {
 
 		this.description = description;
-		this.distanceFromSrc = distanceFromSrc;
+	 
 	}
 	
 

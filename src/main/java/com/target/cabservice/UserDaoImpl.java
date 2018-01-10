@@ -28,6 +28,11 @@ public class UserDaoImpl implements UserDao {
 		return cabserviceOptedUsers;
 	}
 	
+	public List<Location> getAllDropLocations(){
+		
+		return dropLocation;
+	}
+	
 	
 
 	@Override
@@ -90,9 +95,9 @@ public class UserDaoImpl implements UserDao {
 		
 		for(int i = 0;i<dropLocationsList.size();i++) {
 			
-			 String[] distance = dropLocationsList.get(i).getValue().split(",");
+			 String[] distance = dropLocationsList.get(i).getDistance().split(",");
 			
-			  for(int j =0;j<dropLocationsList.size();j++) {
+			  for(int j =0;j<distance.length;j++) {
 				  
 				  srcToDestDistance[i][j] = Integer.parseInt((distance[j]));
 			  }

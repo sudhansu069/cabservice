@@ -31,12 +31,13 @@ public class CabServiceImpl implements CabService {
 	public void saveDropLocations(List<DropLocationDistanceValueDataPair> dropLocationsList) {
 		 
 		  
-		int index =  0;
 		List<Location> tempList = new ArrayList<>();
+		
+		
 		 
 		 for(DropLocationDistanceValueDataPair pair : dropLocationsList) {
 			 
-			  Location loc = new Location(index++,pair.getKey()) ;
+			  Location loc = new Location(pair.getDropLoacation()) ;
 			  tempList.add(loc);
 		 }
 		 

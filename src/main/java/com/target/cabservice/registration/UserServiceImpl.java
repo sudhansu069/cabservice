@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.target.cabservice.CabUser;
 import com.target.cabservice.UserDao;
+import com.target.cabservice.dto.Location;
 import com.target.cabservice.dto.RegistrationDTO;
 /**
  * 
@@ -31,13 +32,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean validateRegistartion(RegistrationDTO regDto) {
 		 
-		 List<CabUser> allCabOptedUsers = userDao.getAllUsers();
+		 List<Location> allDropLocations = userDao.getAllDropLocations();
 		 
 		 boolean isdropPointExistInSytem = false;
 		 
-		 for(CabUser cu : allCabOptedUsers) {
+		 for(Location cu : allDropLocations) {
 			 
-			    if(cu.getDropPoint().equalsIgnoreCase(regDto.getDrop_point())) {
+			    if(cu.getDescription().equalsIgnoreCase(regDto.getDrop_point())) {
 			    	
 			    	isdropPointExistInSytem =  true;
 			    	break;

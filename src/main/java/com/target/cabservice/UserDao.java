@@ -19,6 +19,8 @@ public interface UserDao {
 	
 	public List<CabUser> getAllUsers();
 	
+	public List<Location> getAllDropLocations();
+	
 	public void saveUserDropLocation(List<Location> dropLocationList);
 	
 	public void saveDistance(List<DropLocationDistanceValueDataPair> dropLocationsList);
