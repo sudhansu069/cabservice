@@ -1,7 +1,9 @@
 package com.target.cabservice;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,7 @@ public class UserDaoImpl implements UserDao {
 	
 	private List<CabUser> cabserviceOptedUsers = new ArrayList<>();
 	private List<Location> dropLocation = new ArrayList<>();
+	private Map<Location,List<Integer>> dropLocationToIdsMap = new HashMap<>();
 	
 	private int[][] srcToDestDistance;
 	 
@@ -30,7 +33,18 @@ public class UserDaoImpl implements UserDao {
 	
 	public List<Location> getAllDropLocations(){
 		
-		return dropLocation;
+		List<Location> dropLocations = new ArrayList<>();
+		
+		// Filter out the Drop Location Excluding the Pickup Location
+		if(dropLocation.size() >1) {
+			
+			for(int i = 1;i<dropLocation.size();i++) {
+				
+				dropLocations.add(dropLocation.get(i));
+			}
+		}
+		
+		return dropLocations;
 	}
 	
 	
@@ -39,6 +53,12 @@ public class UserDaoImpl implements UserDao {
 	public void save(RegistrationDTO regDto) {
 		 
 		cabserviceOptedUsers.add(new CabUser(regDto.getTeam_member_id(), regDto.getGender(), regDto.getDrop_point()));
+		
+		if(dropLocationToIdsMap.get(regDto.getDrop_point()) == null) {
+			
+			dropLocationToIdsMap.put(new Location(regDto.getDrop_point()), new ArrayList<>());
+		}
+		dropLocationToIdsMap.get(new Location(regDto.getDrop_point())).add(regDto.getTeam_member_id());
 
 	}
 

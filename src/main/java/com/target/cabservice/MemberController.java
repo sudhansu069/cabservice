@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -22,6 +23,8 @@ import com.target.cabservice.dto.CabDTO;
 import com.target.cabservice.dto.CabRequestWrapper;
 import com.target.cabservice.dto.RegistrationDTO;
 import com.target.cabservice.dto.RegistrationDTOWrapper;
+import com.target.cabservice.dto.RouteDTO;
+import com.target.cabservice.dto.RoutePlanResponse;
 import com.target.cabservice.registration.UserService;
 /**
  * 
@@ -69,7 +72,7 @@ public class MemberController {
 
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 			}
-			cabService.updateCabInfo(cabDto);
+			cabService.addCab(cabDto);
 		}
 
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -100,6 +103,21 @@ public class MemberController {
 		       
 		   return ResponseEntity.status(HttpStatus.CREATED).build();
 		}
+	 
+	 @RequestMapping(value = "/route_plan" ,method = RequestMethod.GET,produces = "Application/json")
+	public @ResponseBody RoutePlanResponse getRoutePlans() {
+
+		RoutePlanResponse response = new RoutePlanResponse();
+		
+		List<RouteDTO> routes  =  cabService.getAllRoutes();
+		double totalCost = cabService.getTotalCost(routes);
+		
+		response.setRoutes(routes);
+		response.setTotal_cost(totalCost);
+
+		return response;
+
+	}
 	 
 	
 	 
