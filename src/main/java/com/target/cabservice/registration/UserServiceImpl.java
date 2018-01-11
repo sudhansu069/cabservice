@@ -11,6 +11,7 @@ import com.target.cabservice.CabUser;
 import com.target.cabservice.UserDao;
 import com.target.cabservice.dto.Location;
 import com.target.cabservice.dto.RegistrationDTO;
+import com.target.cabservice.exceptions.InvalidDropLocationException;
 /**
  * 
  * @author sudhansu
@@ -30,22 +31,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean validateRegistartion(RegistrationDTO regDto) {
+	public void validateRegistartion(RegistrationDTO regDto) throws InvalidDropLocationException {
 		 
 		 List<Location> allDropLocations = userDao.getAllDropLocations();
-		 
-		 boolean isdropPointExistInSytem = false;
 		 
 		 for(Location cu : allDropLocations) {
 			 
 			    if(cu.getDescription().equalsIgnoreCase(regDto.getDrop_point())) {
 			    	
-			    	isdropPointExistInSytem =  true;
-			    	break;
+			    	return;
 			    }
 		 }
-		 
-		 return isdropPointExistInSytem ;
+		 throw new InvalidDropLocationException("Drop Location Has not yet registred");
 		 
 		 
 	}

@@ -11,6 +11,7 @@ import com.target.cabservice.dto.CabDTO;
 import com.target.cabservice.dto.Location;
 import com.target.cabservice.dto.RouteDTO;
 import com.target.cabservice.exceptions.CabNotAvailableException;
+import com.target.cabservice.exceptions.InsufficientCabException;
 
 @Service
 public class CabServiceImpl implements CabService {
@@ -29,9 +30,23 @@ public class CabServiceImpl implements CabService {
 	}
 
 	@Override
-	public boolean validateCabInfo(CabDTO cabDto) {
+	public void validate(List<CabDTO> cabDtoList) throws InsufficientCabException{
 
-		return true;
+		 List<CabUser> cabUsers = userDao.getAllUsers();
+		 
+		 int totalCapacityNeeded = cabUsers.size();
+		 
+		 if(totalCapacityNeeded == 0) return;
+		 
+		 int currentCapacity = 0;
+		 
+		 
+		 for(CabDTO cabDto : cabDtoList) {
+			 
+			 currentCapacity +=  cabDto.getCapacity();
+		 }
+		 
+		 if(currentCapacity <totalCapacityNeeded) throw new InsufficientCabException("InsufficientCabs Are Being Posted..");
 	}
 
 	@Override
