@@ -6,17 +6,18 @@ package com.target.cabservice.dto;
  */
 public class CabDTO {
   
-	private int cab_id;
+	private String id;
 	private int capacity;
 	private double cost;
 	
 	
 	
-	public int getCab_id() {
-		return cab_id;
+	 
+	public String getId() {
+		return id;
 	}
-	public void setCab_id(int cab_id) {
-		this.cab_id = cab_id;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public int getCapacity() {
 		return capacity;

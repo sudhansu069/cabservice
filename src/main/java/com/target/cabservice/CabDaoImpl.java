@@ -27,14 +27,14 @@ public class CabDaoImpl implements CabDao {
 	}
 
 	@Override
-	public void delete(int Id) {
+	public void delete(String Id) {
 		 
 		  Iterator<CabDTO> itr = cabs.iterator();
 		  
 		  while(itr.hasNext()) {
 			  
 			    CabDTO cab = itr.next();
-			    if(cab.getCab_id() == Id) {
+			    if(cab.getId() == Id) {
 			    	
 			    	itr.remove();
 			    	break;

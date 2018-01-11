@@ -10,7 +10,7 @@ public interface CabDao {
 	
 	public void update(CabDTO regDto);
 	
-	public void delete(int Id);
+	public void delete(String Id);
 	
 	public List<CabDTO> getAllCabs();
 	

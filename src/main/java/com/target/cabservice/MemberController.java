@@ -25,6 +25,7 @@ import com.target.cabservice.dto.RegistrationDTO;
 import com.target.cabservice.dto.RegistrationDTOWrapper;
 import com.target.cabservice.dto.RouteDTO;
 import com.target.cabservice.dto.RoutePlanResponse;
+import com.target.cabservice.exceptions.CabNotAvailableException;
 import com.target.cabservice.registration.UserService;
 /**
  * 
@@ -109,11 +110,23 @@ public class MemberController {
 
 		RoutePlanResponse response = new RoutePlanResponse();
 		
-		List<RouteDTO> routes  =  cabService.getAllRoutes();
-		double totalCost = cabService.getTotalCost(routes);
+		List<RouteDTO> routes  = new ArrayList<>(); 
 		
-		response.setRoutes(routes);
-		response.setTotal_cost(totalCost);
+		try {
+			  
+			routes.addAll(cabService.getAllRoutes());
+			
+			double totalCost = cabService.getTotalCost(routes);
+			
+			response.setRoutes(routes);
+			response.setTotal_cost(totalCost);
+		} catch (CabNotAvailableException e) {
+			 
+			  e.printStackTrace();
+		} catch(Exception ex) {
+			
+			  ex.printStackTrace();
+		}
 
 		return response;
 

@@ -1,6 +1,7 @@
 package com.target.cabservice;
 
 import java.util.List;
+import java.util.Map;
 
 import com.target.cabservice.dto.Location;
 import com.target.cabservice.dto.RegistrationDTO;
@@ -24,6 +25,10 @@ public interface UserDao {
 	public void saveUserDropLocation(List<Location> dropLocationList);
 	
 	public void saveDistance(List<DropLocationDistanceValueDataPair> dropLocationsList);
+	
+	public Location getSrcLocation();
+	
+	public Map<String,List<Integer>> getDropLocationWithMembersMap();
 	
 	
 }

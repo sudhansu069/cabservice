@@ -17,9 +17,11 @@ import com.target.cabservice.dto.RegistrationDTO;
 @Component
 public class UserDaoImpl implements UserDao {
 	
+	private Location srcLocation;
+	
 	private List<CabUser> cabserviceOptedUsers = new ArrayList<>();
 	private List<Location> dropLocation = new ArrayList<>();
-	private Map<Location,List<Integer>> dropLocationToIdsMap = new HashMap<>();
+	private Map<String,List<Integer>> dropLocationToIdsMap = new HashMap<>();
 	
 	private int[][] srcToDestDistance;
 	 
@@ -33,18 +35,7 @@ public class UserDaoImpl implements UserDao {
 	
 	public List<Location> getAllDropLocations(){
 		
-		List<Location> dropLocations = new ArrayList<>();
-		
-		// Filter out the Drop Location Excluding the Pickup Location
-		if(dropLocation.size() >1) {
-			
-			for(int i = 1;i<dropLocation.size();i++) {
-				
-				dropLocations.add(dropLocation.get(i));
-			}
-		}
-		
-		return dropLocations;
+	   return dropLocation;	 
 	}
 	
 	
@@ -56,9 +47,9 @@ public class UserDaoImpl implements UserDao {
 		
 		if(dropLocationToIdsMap.get(regDto.getDrop_point()) == null) {
 			
-			dropLocationToIdsMap.put(new Location(regDto.getDrop_point()), new ArrayList<>());
+			dropLocationToIdsMap.put(regDto.getDrop_point(), new ArrayList<>());
 		}
-		dropLocationToIdsMap.get(new Location(regDto.getDrop_point())).add(regDto.getTeam_member_id());
+		dropLocationToIdsMap.get(regDto.getDrop_point()).add(regDto.getTeam_member_id());
 
 	}
 
@@ -97,12 +88,14 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void saveUserDropLocation(List<Location> dropLocationList) {
+		
+		
+		srcLocation = dropLocationList.get(0);
+		
+		dropLocationList.remove(0);
+		dropLocation.addAll(dropLocationList);
 		   
-		    
-		  for(Location loc : dropLocationList) {
-			  
-			  dropLocation.add(loc);
-		  }
+		 
 	}
 
 
@@ -124,6 +117,18 @@ public class UserDaoImpl implements UserDao {
 		}
 		     
 		
+	}
+
+	@Override
+	public Location getSrcLocation() {
+		// TODO Auto-generated method stub
+		return srcLocation;
+	}
+
+	@Override
+	public Map<String, List<Integer>> getDropLocationWithMembersMap() {
+		
+		return dropLocationToIdsMap;
 	}
 
 }
